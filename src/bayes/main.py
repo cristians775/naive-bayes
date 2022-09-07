@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn import metrics
+
 from bayes import Bayes
 
 df = pd.read_excel("./datos_de_entrenamiento.xlsx")
@@ -96,8 +98,7 @@ def calculate_metrics(arr_1, arr_2):
     result['accuracy'] = (tp+tn)/(tp+tn+fp+fn)
     result['precision'] = tp/(tp+fp)
     result['recall'] = tp/(tp+fn)
-    result['f1_score'] = (2*result['precision']*result['recall']) / \
-        (result['precision'] + result['recall'])
+    result['f1_score'] = (2*result['precision']*result['recall'])/(result['precision'] + result['recall'])
     result['tp_rate'] = tp/(tp+fn)
     result['fp_rate'] = fp/(tn+fp)
     result['tp'] = tp
@@ -140,6 +141,24 @@ fp_rate_list = [result['fp_rate'], result_1['fp_rate'], result_2['fp_rate'], res
                 result_5['fp_rate'], result_6['fp_rate'], result_7['fp_rate'], result_8['fp_rate'], result_9['fp_rate']]
 tp_rate_list = [result['tp_rate'], result_1['tp_rate'], result_2['tp_rate'], result_3['tp_rate'], result_4['tp_rate'],
                 result_5['tp_rate'], result_6['tp_rate'], result_7['tp_rate'], result_8['tp_rate'], result_9['tp_rate']]
+
+
+
+
+
+#confusion matrix 
+
+print(result_6)
+print("\n")
+print("\n")
+print("\n")
+confusion_matrix = metrics.confusion_matrix(true_class_test_data_1, result_test_data_6)
+
+cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = [False, True])
+cm_display.plot()
+plt.ylabel('Clase resultado')
+plt.xlabel('Clase verdadera')
+plt.show()
 print('fp', fp_rate_list)
 print('tp', tp_rate_list)
 plt.figure()
